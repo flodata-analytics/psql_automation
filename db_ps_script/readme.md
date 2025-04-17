@@ -15,7 +15,25 @@ It relies on the `psql` command-line tool being installed and accessible in your
 
 1.  **PowerShell:** The script is designed to run in a PowerShell environment (typically available by default on Windows).
 2.  **PostgreSQL Client Tools:** You **must** have the PostgreSQL client tools installed on the machine where you run this script. Specifically, the `psql.exe` executable is required.
-3.  **`psql` in PATH:** The directory containing `psql.exe` must be included in your system's `PATH` environment variable so PowerShell can find and execute it.
+3.  **`psql` in PATH:** For the script to find and execute `psql.exe` simply by typing `psql`, the directory containing `psql.exe` must be listed in your system's `PATH` environment variable.
+    * **What is the PATH?** The `PATH` is a system variable that lists directories where the operating system looks for executable files when you run a command without specifying its full location.
+    * **Where is `psql.exe`?** The location depends on your PostgreSQL installation version and settings, but it's typically found in a `bin` directory. Common locations include:
+        * `C:\Program Files\PostgreSQL\<version>\bin` (e.g., `C:\Program Files\PostgreSQL\16\bin`)
+        * `C:\Program Files\PostgreSQL\<version>\client\bin`
+        * *You need to find the exact path on your system.*
+    * **How to Add the `psql` Directory to PATH:**
+        1.  **Find the `bin` directory** containing `psql.exe` (as described above). Copy this full path.
+        2.  **Open Environment Variables:** Search for "Environment Variables" in the Windows Start menu and select "Edit the system environment variables".
+        3.  **Click "Environment Variables..."** in the System Properties window.
+        4.  **Edit the Path Variable:**
+            * Under "System variables" (recommended, affects all users) or "User variables" (affects only you), find the variable named `Path`.
+            * Select `Path` and click "Edit...".
+        5.  **Add the Directory:**
+            * Click "New".
+            * Paste the full path to the PostgreSQL `bin` directory you copied earlier (e.g., `C:\Program Files\PostgreSQL\16\bin`).
+            * Click "OK" on all open dialog windows to save the changes.
+        6.  **Restart PowerShell:** You **must** close any open PowerShell windows and open a new one for the PATH change to take effect.
+        7.  **Verify (Optional):** Open a *new* PowerShell window and type `psql --version`. If it shows the PostgreSQL version, the PATH is set correctly.
 4.  **Permissions:** The PostgreSQL user whose credentials you provide must have sufficient privileges to:
     * Connect to the `postgres` database (initially) and any target databases.
     * Query `pg_database`, `pg_user`, `pg_class`, and `pg_namespace` system catalogs.
